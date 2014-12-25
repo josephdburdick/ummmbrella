@@ -4,8 +4,7 @@
  *    return Trips.find({is_public: true});
  *  }
  */
- //WEATHER_UNDERGROUND_KEY: "ab9dbf6db769825d"
-console.log('Weather U Key:' + process.env.WEATHER_UNDERGROUND_KEY);
+
 Trips.allow({
   insert: function (userId, doc) {
     return true;
