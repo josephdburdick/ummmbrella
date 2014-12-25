@@ -3,4 +3,5 @@
 ### Meteor ###
 .meteor/local
 .meteor/meteorite
+config/development/env.sh
 
