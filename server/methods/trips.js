@@ -30,9 +30,12 @@ Meteor.methods({
 	// 	wuUrl = "http://api.wunderground.com/api/"+ wuKey +"/"+ wuQuery + "/" + query + ".json";
 		
 
-	getForecast: function(){
-		var result = HTTP.get(wuUrl('forecast', 'VA/Richmond'));
-		return result + "Hello";
+	getForecast: function(template){
+		// var result = HTTP.get(wuUrl('forecast', place));
+		// Session.set('forecast', result);
+		// return result + "Hello";
+		// return Meteor.http.call('GET', 'http://api.openweathermap.org/data/2.5/weather?q='+ city)
+		return HTTP.get('http://api.wunderground.com/api/ab9dbf6db769825d/forecast/q/CA/San_Francisco.json');
 	}
 	//forecast/q/CA/San_Francisco.json	
 

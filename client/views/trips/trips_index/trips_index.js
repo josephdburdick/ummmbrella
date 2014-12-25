@@ -17,15 +17,13 @@ Template.TripsIndex.helpers({
 	 *    return Items.find();
 	 *  }
 	 */
-	 forecast: function() {
-			var weather = Meteor.call("getForecast", function(error, result){
-				if (error){
-					return error;
-				}	else {
-					return result;
-				}
-			});
-		}
+	forecast: function() {
+		Meteor.call('getForecast', "VA/Richmond", function(error, results){
+			Session.set('weather', results.content);
+		});
+		return (Session.get('weather'));
+	}
+
 
 });
 
