@@ -5,6 +5,7 @@
 .meteor/meteorite
 config/development/env.sh
 public/bower_components
+.em/
 
 # Created by https://www.gitignore.io
 
