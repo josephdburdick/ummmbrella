@@ -35,7 +35,8 @@ Meteor.methods({
 		// Session.set('forecast', result);
 		// return result + "Hello";
 		// return Meteor.http.call('GET', 'http://api.openweathermap.org/data/2.5/weather?q='+ city)
-		return HTTP.get('http://api.wunderground.com/api/ab9dbf6db769825d/forecast/q/CA/San_Francisco.json');
+		// return HTTP.get('http://api.wunderground.com/api/ab9dbf6db769825d/forecast/q/CA/San_Francisco.json');
+		
 	}
 	//forecast/q/CA/San_Francisco.json	
 

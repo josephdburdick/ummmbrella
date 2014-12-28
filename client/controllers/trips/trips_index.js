@@ -1,5 +1,7 @@
 TripsIndexController = RouteController.extend({
   waitOn: function () {
+  
+
   },
 
   data: function () {
@@ -7,5 +9,5 @@ TripsIndexController = RouteController.extend({
 
   action: function () {
     this.render();
-  }
+  }  
 });
