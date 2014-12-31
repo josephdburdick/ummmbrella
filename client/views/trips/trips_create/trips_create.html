@@ -1,0 +1,28 @@
+<template name="TripsCreate">
+
+  <form>
+
+      <paper-checkbox id="TripsCreate--one-way"></paper-checkbox>
+      <core-label for="TripsCreate--one-way">
+          One Way?
+      </core-label>
+
+      <paper-input-decorator label="Origin" floatingLabel>
+          <input is="core-input" id="TripsCreate--origin-field">
+      </paper-input-decorator>
+
+      <paper-input-decorator label="Destination" floatingLabel>
+          <input is="core-input" id="TripsCreate--destination-field">
+      </paper-input-decorator>
+
+      <paper-input-decorator label="When are you leaving?" floatingLabel>
+          <input is="core-input">
+      </paper-input-decorator>
+
+      <input type="submit">
+
+      Test: {{destination}}
+
+  </form>
+
+</template>

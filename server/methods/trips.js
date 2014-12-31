@@ -31,6 +31,7 @@ Meteor.methods({
 		
 
 	getForecast: function(template){
+
 		// var result = HTTP.get(wuUrl('forecast', place));
 		// Session.set('forecast', result);
 		// return result + "Hello";
