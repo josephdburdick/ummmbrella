@@ -1,11 +1,13 @@
 <template name="TripsCreate">
-
+  <core-toolbar class="tall">
+    <paper-icon-button icon="menu"></paper-icon-button>
+    <div class="middle indent">Ummmbrella</div>
+    <span flex></span>
+    <paper-icon-button icon="menu"></paper-icon-button>
+  </core-toolbar>
   <form>
 
-      <paper-checkbox id="TripsCreate--one-way"></paper-checkbox>
-      <core-label for="TripsCreate--one-way">
-          One Way?
-      </core-label>
+      
 
       <paper-input-decorator label="Origin" floatingLabel>
           <input is="core-input" id="TripsCreate--origin-field">
@@ -18,8 +20,13 @@
       <paper-input-decorator label="When are you leaving?" floatingLabel>
           <input is="core-input">
       </paper-input-decorator>
-
-      <input type="submit">
+      
+      <paper-checkbox id="TripsCreate--one-way"></paper-checkbox>
+      <core-label for="TripsCreate--one-way">
+          One Way?
+      </core-label>
+      
+      <paper-icon-button type="submit">Submit</paper-icon-button>
 
       Test: {{destination}}
 

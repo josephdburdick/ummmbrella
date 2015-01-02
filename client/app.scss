@@ -2,10 +2,25 @@
 /* Global CSS Styles */
 /*****************************************************************************/
 
+
+/*
+
+Variables
+
+*/
+$primaryColor1: #5507B2;
+$primaryColor2: #8D2CFF;
+$primaryColor3: #7F13FF;
+$secondaryColor1: #B2B000;
+$secondaryColor2: #FFFC13;
+
+
 body{
   font: normal 18px/1.4 Helvetica Neue, Helvetica, Arial, serif;
+  background: #ddd;
 }
 
-//h1,h2,h3,h4,h5{
-//  font-family: 'Montserrat', sans-serif;
-//}
+core-toolbar{
+	background-color: $primaryColor1;;
+	color: white;
+}

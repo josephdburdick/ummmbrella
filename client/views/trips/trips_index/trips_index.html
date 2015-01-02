@@ -1,8 +1,19 @@
 <template name="TripsIndex">
-  <h1>Ummmbrella</h1>
-  <h2>Weather for your travels</h2>
-
-  {{> TripsCreate}}
+<core-toolbar >
+	<div>Ummmbrella</div>
+</core-toolbar>
+<post-card>
+  <img src="profile-picture.png">
+  <h2>A. Developer</h2>
+  <p>
+	{{#linkTo route="trips.create" class="btn btn-large"}}
+		<span style="color: orange;">
+			Start
+	  </span>
+	{{/linkTo}}
+	</p>
+</post-card>
+  
 </template>
 
 
