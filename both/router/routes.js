@@ -12,3 +12,9 @@ Router.configure({
  *  Router.route('/', {name: 'home'});
 */
 Router.route('/', {name: 'trips.index'});
+
+Router.route('/create', {name: 'trips.create'});
+
+// Router.route('/create', function () {
+//   this.render('trips_create');
+// });
