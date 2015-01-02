@@ -13,26 +13,38 @@ Template.TripsCreate.events({
       Session.set('destination', e.target.value);
       if (!$('form #weather').length)
         $('form').append('<div id="weather"></div>');
-      $.simpleWeather({
-        location: Session.get('destination'),
-        woeid: '',
-        unit: 'f',
-        success: function(weather) {
-          html = '<p>'+weather.temp+'&deg; in '+ Session.get('destination')+ '</p>';
+      setTimeout(function(){
+        // Weather
+        $.simpleWeather({
+          location: Session.get('destination'),
+          woeid: '',
+          unit: 'f',
+          success: function(weather) {
+            html = '<p>'+weather.temp+'&deg; in '+ Session.get('destination')+ '</p>';
 
-          $("#weather").html(html);
+            $("#weather").html(html);
+          },
+          error: function(error) {
+            $("#weather").html('<p>'+error+'</p>');
+          }
+        });
+
+
+        // Flickr
+        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+        {
+          tags: Session.get('destination'),
+          tagmode: "any",
+          format: "json"
         },
-        error: function(error) {
-          $("#weather").html('<p>'+error+'</p>');
-        }
-      });
+        function(data) {
+          $.each(data.items, function(i,item){
+            $("<img/>").attr("src", item.media.m).prependTo("#weather");
+            if ( i == 10 ) return false;
+          });
+        });
+      }, 2000);
     },
-
-
-
-
-
-
 
     'submit form': function(e, template){
       e.preventDefault();
@@ -59,7 +71,12 @@ Template.TripsCreate.helpers({
       return Session.get('destination');
     else
       return "Destination";
-
+  },
+  selectedDate: function(){
+    if (Session.get('leavingDate'))
+      return Session.get('leavingDate');
+    else
+      return new Date();
   }
 });
 

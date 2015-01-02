@@ -17,13 +17,14 @@
           <input is="core-input" id="TripsCreate--destination-field">
       </paper-input-decorator>
 
-      <paper-input-decorator label="When are you leaving?" floatingLabel>
-          <input is="core-input">
-      </paper-input-decorator>
+      <input id="trip-leavingDate" value="{{selectedDate}}" 
+        readonly class="date">
+      <!-- <polymer-date-picker 
+        id="datepicker-leaving" selectedDate="{{selectedDate}}" relatedTarget="trip-leavingDate" opened="false"></polymer-date-picker> -->
       
       <paper-checkbox id="TripsCreate--one-way"></paper-checkbox>
       <core-label for="TripsCreate--one-way">
-          One Way?
+          Is this a one-way trip?
       </core-label>
       
       <paper-icon-button type="submit">Submit</paper-icon-button>
