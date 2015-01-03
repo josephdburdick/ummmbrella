@@ -1,9 +1,8 @@
 <template name="TripsCreate">
   <core-toolbar class="tall">
     <paper-icon-button icon="menu"></paper-icon-button>
-    <div class="middle indent">Ummmbrella</div>
+    <div class="">Ummmbrella</div>
     <span flex></span>
-    <paper-icon-button icon="menu"></paper-icon-button>
   </core-toolbar>
   <form>
 
@@ -16,11 +15,12 @@
       <paper-input-decorator label="Destination" floatingLabel>
           <input is="core-input" id="TripsCreate--destination-field">
       </paper-input-decorator>
-
-      <input id="trip-leavingDate" value="{{selectedDate}}" 
-        readonly class="date">
-      <!-- <polymer-date-picker 
-        id="datepicker-leaving" selectedDate="{{selectedDate}}" relatedTarget="trip-leavingDate" opened="false"></polymer-date-picker> -->
+      <paper-input-decorator label="Leaving" floatingLabel>
+        <input id="trip-leavingDate" value="{{selectedDate}}" 
+          readonly class="date">
+        
+      </paper-input-decorator>
+      <paper-date-picker></paper-date-picker>
       
       <paper-checkbox id="TripsCreate--one-way"></paper-checkbox>
       <core-label for="TripsCreate--one-way">
