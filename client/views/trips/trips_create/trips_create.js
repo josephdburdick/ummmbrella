@@ -1,6 +1,7 @@
 /*****************************************************************************/
-/* TripsCreate: Event Handlers and Helpersss .js*/
+/* TripsCreate: Event Handlers and Helpers .js*/
 /*****************************************************************************/
+
 Template.TripsCreate.events({
   /*
    * Example:
@@ -9,8 +10,37 @@ Template.TripsCreate.events({
    *  }
    */
 
+    'click #trip-getLocation': function(e, template){
+      navigator.geolocation.getCurrentPosition(function(position) {
+        Session.set('coords', {
+          lat: position.coords.latitude,
+          lon: position.coords.longitude
+        });
+
+        var coords = Session.get('coords');
+
+        Meteor.call('geocodeLocation', coords, function(e, response){
+          var location = {
+            hood: response.data.results[2].address_components[0].short_name,
+            city: response.data.results[2].address_components[1].short_name,
+            state: response.data.results[2].address_components[4].short_name,
+            country: response.data.results[2].address_components[5].short_name
+          };
+          Session.set('geocodeLocation', location);
+          
+        });
+          
+      });
+    },
     'keyup input': function (e, template) {
-      Session.set('destination', e.target.value);
+      Session.set('origin-location', $('#origin-location').val());
+      Session.set('destination-location', $('#destination-location').val());
+    },
+
+    'submit form': function(e, template){
+      e.preventDefault();
+      console.log('origin: ', Session.get('origin-location'));
+      console.log('destination: ', Session.get('destination-location'));
       if (!$('form #weather').length)
         $('form').append('<div id="weather"></div>');
       setTimeout(function(){
@@ -20,6 +50,7 @@ Template.TripsCreate.events({
           woeid: '',
           unit: 'f',
           success: function(weather) {
+            debugger;
             html = '<p>'+weather.temp+'&deg; in '+ Session.get('destination')+ '</p>';
 
             $("#weather").html(html);
@@ -28,34 +59,8 @@ Template.TripsCreate.events({
             $("#weather").html('<p>'+error+'</p>');
           }
         });
-
-
-        // Flickr
-        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
-        {
-          tags: Session.get('destination'),
-          tagmode: "any",
-          format: "json"
-        },
-        function(data) {
-          $.each(data.items, function(i,item){
-            $("<img/>").attr("src", item.media.m).prependTo("#weather");
-            if ( i == 10 ) return false;
-          });
-        });
       }, 2000);
-    },
-
-    'submit form': function(e, template){
-      e.preventDefault();
-      //var dest = (Session.get('destination'));
-
     }
-
-
-
-
-
 });
 
 Template.TripsCreate.helpers({
@@ -65,7 +70,6 @@ Template.TripsCreate.helpers({
    *    return Items.find();
    *  }
    */
-
   destination: function (){
     if (Session.get('destination'))
       return Session.get('destination');
@@ -77,6 +81,16 @@ Template.TripsCreate.helpers({
       return Session.get('leavingDate');
     else
       return new Date();
+  },
+  coords: function() { return Session.get('coords'); },
+  currentLocation: function(){
+    if (Session.get('geocodeLocation')){
+      var l = Session.get('geocodeLocation');  
+      return l.hood + ", " + l.city + ", " + l.state; 
+    } else {
+      return "";
+    }
+    
   }
 });
 
@@ -84,10 +98,21 @@ Template.TripsCreate.helpers({
 /* TripsCreate: Lifecycle Hooks */
 /*****************************************************************************/
 Template.TripsCreate.created = function () {
+
+  // if (!Session.get('coords')){
+  //   var coords = geoLocate();
+  //   debugger;
+  // }
+  // Meteor.call('geocodeCity', coords, function(error, result){
+  //   Session.set('geocodeCity', result);
+  // });
+  // console.log("Geocode City is ", Session.get('geocodeCity'));
 };
 
 Template.TripsCreate.rendered = function () {
+  
 };
 
 Template.TripsCreate.destroyed = function () {
+  Meteor.clearInterval(getGeolocation);
 };

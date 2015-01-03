@@ -1,20 +1,18 @@
 <template name="TripsIndex">
-<core-toolbar >
-	<div>Ummmbrella</div>
-</core-toolbar>
-<post-card>
-  <img src="profile-picture.png">
-  <h2>A. Developer</h2>
-  <p>
-  <paper-icon-button>
-	{{#linkTo route="trips.create" class="btn btn-large intro"}}
-		
-			Start
-	  
-	{{/linkTo}}
-	</paper-icon-button>
-	</p>
-</post-card>
+	<div vertical layout>
+		<div flex>
+		  
+		</div>
+		<div>
+			
+				{{#linkTo route="trips.create" class="btn btn-large intro"}}
+					
+						Start
+				  
+				{{/linkTo}}
+			
+		</div>
+	</div>
   
 </template>
 

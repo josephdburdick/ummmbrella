@@ -1,36 +1,45 @@
 <template name="TripsCreate">
-  <core-toolbar class="tall">
-    <paper-icon-button icon="menu"></paper-icon-button>
-    <div class="">Ummmbrella</div>
-    <span flex></span>
-  </core-toolbar>
-  <form>
+  <core-header-panel>
+    <core-toolbar class="tall">
+      <paper-icon-button icon="menu"></paper-icon-button>
+      <div class="">Ummmbrella</div>
+      <span flex></span>
+    </core-toolbar>
 
-      
+    <form class="container">
+      <div layout horizontal>
+        <div flex>
+          <paper-input-decorator label="Origin" floatingLabel>
+            <input is="core-input" id="origin-location" value="{{currentLocation}}">
+          </paper-input-decorator>
+        </div>
+        <div>
+          <paper-icon-button class="btn" icon="location-on" id="trip-getLocation"></paper-icon-button>        
+        </div>
+      </div>
+        <paper-input-decorator label="Destination" floatingLabel>
+          <input is="core-input" id="destination-location">
+        </paper-input-decorator>
 
-      <paper-input-decorator label="Origin" floatingLabel>
-          <input is="core-input" id="TripsCreate--origin-field">
-      </paper-input-decorator>
-
-      <paper-input-decorator label="Destination" floatingLabel>
-          <input is="core-input" id="TripsCreate--destination-field">
-      </paper-input-decorator>
-      <paper-input-decorator label="Leaving" floatingLabel>
-        <input id="trip-leavingDate" value="{{selectedDate}}" 
-          readonly class="date">
+        <paper-input-decorator label="Leaving">
+          <input type="datetime-local" id="trip-leavingDate" value="{{selectedDate}}" class="date">
+        </paper-input-decorator>
         
-      </paper-input-decorator>
-      <paper-date-picker></paper-date-picker>
-      
-      <paper-checkbox id="TripsCreate--one-way"></paper-checkbox>
-      <core-label for="TripsCreate--one-way">
-          Is this a one-way trip?
-      </core-label>
-      
-      <paper-icon-button type="submit">Submit</paper-icon-button>
+        <paper-checkbox id="TripsCreate--one-way"></paper-checkbox>
+        <core-label for="TripsCreate--one-way">
+            Is this a one-way trip?
+        </core-label>
 
-      Test: {{destination}}
+        <div center horizontal layout>
+          <div flex>One-way?</div>
+          <paper-toggle-button checked></paper-toggle-button>
+        </div>
+        
+        <input type="submit" class="hidden">
 
-  </form>
+        Test: {{destination}}
+
+    </form>
+  </core-header-panel>
 
 </template>

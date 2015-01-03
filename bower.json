@@ -16,7 +16,6 @@
   ],
   "dependencies": {
     "simpleWeather": "3.0.2",
-    "paper-date-picker": "git@github.com:David-Mulder/paper-date-picker",
     "moment": ">= 2.6.0",
     "jquery": ">= 1.2.0"
   }
