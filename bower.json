@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "moment": ">= 2.6.0"  
+    "moment": ">= 2.6.0",
+    "smalot-bootstrap-datetimepicker": "~2.3.0"
   }
 }
