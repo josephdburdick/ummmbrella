@@ -3,6 +3,7 @@
   margin-bottom: 0;
   position: relative;
   padding-bottom: 0.5em;
+  transition: all .25s ease-out;
 }
 
 .floating-label-form-group input,
@@ -42,12 +43,15 @@
 }
 
 .floating-label-form-group-with-value label {
-  top: 0;
+  top: .5em;
   opacity: 1;
 }
 
 .floating-label-form-group-with-focus label {
   color: $brand-primary;
+}
+.floating-label-form-group-with-focus{
+  box-shadow: inset 0 -2px $brand-primary;
 }
 
 form .row:first-child .floating-label-form-group {

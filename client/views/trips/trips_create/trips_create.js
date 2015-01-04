@@ -11,6 +11,9 @@ Template.TripsCreate.events({
    */
 
     'click #trip-getLocation': function(e, template){
+
+    },
+    'click #trip-getLocation': function(e, template){
       $('body').append('<div class="loader"></div>');
       navigator.geolocation.getCurrentPosition(function(position) {
         Session.set('coords', {
@@ -29,8 +32,14 @@ Template.TripsCreate.events({
           Session.set('geocodeLocation', location);
           $('.loader').remove();
         });
-        $('#trip-getLocation').trigger('focus').trigger('change').toggleClass('floating-label-form-group-with-value');
-          
+        $(e.currentTarget).closest('.input-group').addClass('floating-label-form-group-with-value');
+        if (!Session.get('selectedDate')){
+          $(e.currentTarget).closest('.input-group').next('.input-group').find('input')
+            .focus()
+              .val(Session.get('tomorrowsDatetime'))
+            .closest('.input-group')
+              .addClass('floating-label-form-group-with-value');
+        }  
       });
     },
     'keyup input': function (e, template) {
@@ -77,12 +86,17 @@ Template.TripsCreate.helpers({
     else
       return "Destination";
   },
-  tomorrowsDatetime: function(){
-    return Session.get('tomorrowsDatetime');
-  },
-  selectedDate: function(){
+  
+  selectedDate: function(options){
     if (Session.get('leavingDate'))
       return Session.get('leavingDate');
+    else
+      return Session.get('tomorrowsDatetimeLocal');
+  },
+  leavingDateTime: function(options){
+
+    if (Session.get('leavingDateTime'))
+      return Session.get('leavingDateTime');
     else
       return Session.get('tomorrowsDatetimeLocal');
   },
@@ -97,10 +111,30 @@ Template.TripsCreate.helpers({
   }
 });
 
-Meteor.setInterval(function () {
-    Session.set("tomorrowsDatetime", moment().add(1, 'days').calendar());
-    Session.set("tomorrowsDatetimeLocal", moment().add(1, 'days').format('MMMM Do YYYY, h:mm:ss a'));
-}, 1000 );
+var timeUpdate = function(options){
+  var timerId;
+  if (options.getset === true){  
+    timerId = Meteor.setInterval(function(){
+      Session.set("tomorrowsDatetime", moment().add(1, 'days').calendar());
+      Session.set("tomorrowsDatetimeLocal", moment().add(1, 'days').format('MMMM Do YYYY, h:mm:ss a'));
+    }, 1000 );
+    console.log('timerId starting:', timerId);
+    if (options.el)
+      $(options.el[0]).attr('data-timerId', timerId);
+  } else {
+    if (options.el){
+      $(options.el).attr('data-timerId', timerId);
+    }
+    console.log('timerId stopping:', timerId);
+    Meteor.clearInterval(timerId);  
+  } 
+  
+    
+  return timerId; 
+};
+
+
+
 
 /*****************************************************************************/
 /* TripsCreate: Lifecycle Hooks */
@@ -110,9 +144,50 @@ Template.TripsCreate.created = function () {
 };
 
 Template.TripsCreate.rendered = function () {
-  $("[data-toggle=tooltip]").tooltip({
-    container: 'body'
+  // Initiate bootstrap tooltips.
+  $("[data-toggle=tooltip]").tooltip({ container: 'body'});
+
+
+
+  // Initiate form datetimepickers
+  $('.form-datepicker').each(function(i , el){
+    var thisTime = new Date().valueOf()
+    $(el).datetimepicker({
+        startDate: new Date()
+        // format: 'yyyy-mm-dd hh:ii'
+      }).on('changeDate', function(e){
+        console.log(e);
+        if (e.date.valueOf() > new Date().valueOf()){ 
+          // var currentDateTime = $(e.currentTarget).data('value');
+          //find value of calendar in ever event
+        
+          var timerId = timeUpdate({
+            el: $(e.currentTarget),
+            getset: false
+          });
+          Meteor.clearInterval(timerId);
+          var selected = {
+            datetime: $(e.currentTarget).data('datetime'),
+            datetimeLocal: $(e.currentTarget).val()
+          };
+
+          $(e.currentTarget)
+            .data('datetime', selected.datetime)
+            .val(selected.datetimeLocal)
+            .closest('.input-group').addClass('floating-label-form-group-with-value');
+                   
+        }
+    });
+    timeUpdate({
+      el: el,
+      getset: true
+    });;
   });
+
+
+    
+
+
 
   $("body").on("input propertychange", ".floating-label-form-group", function(e) {
     $(this).toggleClass("floating-label-form-group-with-value", !! $(e.target).val());
