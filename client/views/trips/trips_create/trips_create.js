@@ -9,7 +9,11 @@ Template.TripsCreate.events({
    *
    *  }
    */
-
+    'click #trip-getDeparture': function(e, template){
+      e.preventDefault();
+      $(e.currentTarget).closest('.input-group')
+        .find('.form-datepicker').datetimepicker('show');
+    },
     'click #trip-getLocation': function(e, template){
 
     },
@@ -118,18 +122,16 @@ var timeUpdate = function(options){
       Session.set("tomorrowsDatetime", moment().add(1, 'days').calendar());
       Session.set("tomorrowsDatetimeLocal", moment().add(1, 'days').format('MMMM Do YYYY, h:mm:ss a'));
     }, 1000 );
-    console.log('timerId starting:', timerId);
     if (options.el)
-      $(options.el[0]).attr('data-timerId', timerId);
-  } else {
-    if (options.el){
       $(options.el).attr('data-timerId', timerId);
-    }
+    console.log('timerId starting:', timerId);
+  } else {
+    if (isNaN(timerId))
+      timerId = $(options.el).attr('data-timerId');
     console.log('timerId stopping:', timerId);
     Meteor.clearInterval(timerId);  
   } 
   
-    
   return timerId; 
 };
 
@@ -150,33 +152,38 @@ Template.TripsCreate.rendered = function () {
 
 
   // Initiate form datetimepickers
+  var datepickerToggle = function(e, el){
+    if (el)
+      e.date = $(el).attr('data-datetime');
+    if (e.date.valueOf() > new Date().valueOf()){         
+      //find value of calendar in ever event        
+      var timerId = timeUpdate({
+        el: $(e.currentTarget),
+        getset: false
+      });
+
+      Meteor.clearInterval(timerId);
+      var selected = {
+        datetime: $(e.currentTarget).data('datetime'),
+        datetimeLocal: $(e.currentTarget).val()
+      };
+
+      $(e.currentTarget)
+        .data('datetime', selected.datetime)
+        .val(moment(selected.datetimeLocal).format('MMMM Do YYYY, h:mm a'))
+        .closest('.input-group').addClass('floating-label-form-group-with-value');
+    }
+  };
   $('.form-datepicker').each(function(i , el){
     var thisTime = new Date().valueOf()
     $(el).datetimepicker({
-        startDate: new Date()
-        // format: 'yyyy-mm-dd hh:ii'
-      }).on('changeDate', function(e){
-        console.log(e);
-        if (e.date.valueOf() > new Date().valueOf()){ 
-          // var currentDateTime = $(e.currentTarget).data('value');
-          //find value of calendar in ever event
-        
-          var timerId = timeUpdate({
-            el: $(e.currentTarget),
-            getset: false
-          });
-          Meteor.clearInterval(timerId);
-          var selected = {
-            datetime: $(e.currentTarget).data('datetime'),
-            datetimeLocal: $(e.currentTarget).val()
-          };
-
-          $(e.currentTarget)
-            .data('datetime', selected.datetime)
-            .val(selected.datetimeLocal)
-            .closest('.input-group').addClass('floating-label-form-group-with-value');
-                   
-        }
+      startDate: new Date(),
+      showMeridian: true
+    }).on('changeDate', function(e){
+      $(el).datetimepicker('hide');
+      datepickerToggle(e);
+    }).on('change', function(e){
+      datepickerToggle(e, el);
     });
     timeUpdate({
       el: el,
