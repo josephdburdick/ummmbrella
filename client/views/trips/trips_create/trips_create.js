@@ -77,11 +77,14 @@ Template.TripsCreate.helpers({
     else
       return "Destination";
   },
+  tomorrowsDatetime: function(){
+    return Session.get('tomorrowsDatetime');
+  },
   selectedDate: function(){
     if (Session.get('leavingDate'))
       return Session.get('leavingDate');
     else
-      return moment().format();
+      return Session.get('tomorrowsDatetimeLocal');
   },
   coords: function() { return Session.get('coords'); },
   currentLocation: function(){
@@ -91,9 +94,13 @@ Template.TripsCreate.helpers({
     } else {
       return "";
     }
-    
   }
 });
+
+Meteor.setInterval(function () {
+    Session.set("tomorrowsDatetime", moment().add(1, 'days').calendar());
+    Session.set("tomorrowsDatetimeLocal", moment().add(1, 'days').format('MMMM Do YYYY, h:mm:ss a'));
+}, 1000 );
 
 /*****************************************************************************/
 /* TripsCreate: Lifecycle Hooks */
