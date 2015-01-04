@@ -1,45 +1,76 @@
 <template name="TripsCreate">
-  <core-header-panel>
-    <core-toolbar class="tall">
-      <paper-icon-button icon="menu"></paper-icon-button>
-      <div class="">Ummmbrella</div>
-      <span flex></span>
-    </core-toolbar>
 
-    <form class="container">
-      <div layout horizontal>
-        <div flex>
-          <paper-input-decorator label="Origin" floatingLabel>
-            <input is="core-input" id="origin-location" value="{{currentLocation}}">
-          </paper-input-decorator>
-        </div>
-        <div>
-          <paper-icon-button class="btn" icon="location-on" id="trip-getLocation"></paper-icon-button>        
+  <div class="container">
+
+    <div class="intro">
+      <h1>Ummmbrella</h1>
+      <p class="lead">Use this app to look up the weather in multiple locations so you can prepare more effectively.</p>
+    </div>
+
+  </div><!-- /.container -->
+
+  <form role="form" class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group input-group-lg floating-label-form-group">
+          <label for="origin-location">Depart From</label>
+          <input type="text" class="form-control" id="origin-location" placeholder="Where are you departing from?" value="{{currentLocation}}">
+          <a href id="trip-getLocation" class="input-group-addon">
+            <i class="fa fa-location-arrow" data-toggle="tooltip" data-placement="left" title="Detect your location"></i>
+          </a>
         </div>
       </div>
-        <paper-input-decorator label="Destination" floatingLabel>
-          <input is="core-input" id="destination-location">
-        </paper-input-decorator>
-
-        <paper-input-decorator label="Leaving">
-          <input type="datetime-local" id="trip-leavingDate" value="{{selectedDate}}" class="date">
-        </paper-input-decorator>
-        
-        <paper-checkbox id="TripsCreate--one-way"></paper-checkbox>
-        <core-label for="TripsCreate--one-way">
-            Is this a one-way trip?
-        </core-label>
-
-        <div center horizontal layout>
-          <div flex>One-way?</div>
-          <paper-toggle-button checked></paper-toggle-button>
+      <div class="col-md-6">
+        <div class="input-group input-group-lg floating-label-form-group">
+          <label for="origin-departureDate">Leaving At</label>
+          <input type="text" class="form-control" id="origin-departureDate" placeholder="When are you leaving?" value="{{selectedDate}}">
+          <a href id="trip-getDeparture" class="input-group-addon">
+            <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Detect your location"></i>
+          </a>
         </div>
-        
-        <input type="submit" class="hidden">
+      </div>
+    </div>
 
-        Test: {{destination}}
 
-    </form>
-  </core-header-panel>
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group input-group-lg floating-label-form-group">
+        <label for="destination-location">Destination</label>
+        <input type="text" class="form-control" id="destination-location" placeholder="Enter Destination">
+        </div>
+      </div>
+      
+    </div>  
+    
+
+    
+
+    <div layout vertical>
+      
+
+      <paper-input-decorator label="Leaving">
+        <input type="datetime-local" id="trip-leavingDate" value="{{selectedDate}}" class="date">
+      </paper-input-decorator>
+      
+      <paper-checkbox id="TripsCreate--one-way"></paper-checkbox>
+      <core-label for="TripsCreate--one-way">
+          Is this a one-way trip?
+      </core-label>
+
+      
+      
+      <input type="submit" class="hidden">
+    </div>
+      Test: {{destination}}
+
+  </form>
 
 </template>

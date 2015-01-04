@@ -11,24 +11,25 @@ Template.TripsCreate.events({
    */
 
     'click #trip-getLocation': function(e, template){
+      $('body').append('<div class="loader"></div>');
       navigator.geolocation.getCurrentPosition(function(position) {
         Session.set('coords', {
           lat: position.coords.latitude,
           lon: position.coords.longitude
         });
-
         var coords = Session.get('coords');
-
         Meteor.call('geocodeLocation', coords, function(e, response){
           var location = {
-            hood: response.data.results[2].address_components[0].short_name,
+            hood: response.data.results[1].address_components[1].short_name,
             city: response.data.results[2].address_components[1].short_name,
-            state: response.data.results[2].address_components[4].short_name,
-            country: response.data.results[2].address_components[5].short_name
+            state: response.data.results[2].address_components[3].short_name,
+            country: response.data.results[2].address_components[4].short_name
           };
+
           Session.set('geocodeLocation', location);
-          
+          $('.loader').remove();
         });
+        $('#trip-getLocation').trigger('focus').trigger('change').toggleClass('floating-label-form-group-with-value');
           
       });
     },
@@ -80,7 +81,7 @@ Template.TripsCreate.helpers({
     if (Session.get('leavingDate'))
       return Session.get('leavingDate');
     else
-      return new Date();
+      return moment().format();
   },
   coords: function() { return Session.get('coords'); },
   currentLocation: function(){
@@ -99,20 +100,22 @@ Template.TripsCreate.helpers({
 /*****************************************************************************/
 Template.TripsCreate.created = function () {
 
-  // if (!Session.get('coords')){
-  //   var coords = geoLocate();
-  //   debugger;
-  // }
-  // Meteor.call('geocodeCity', coords, function(error, result){
-  //   Session.set('geocodeCity', result);
-  // });
-  // console.log("Geocode City is ", Session.get('geocodeCity'));
 };
 
 Template.TripsCreate.rendered = function () {
-  
+  $("[data-toggle=tooltip]").tooltip({
+    container: 'body'
+  });
+
+  $("body").on("input propertychange", ".floating-label-form-group", function(e) {
+    $(this).toggleClass("floating-label-form-group-with-value", !! $(e.target).val());
+  }).on("focus", ".floating-label-form-group", function() {
+    $(this).addClass("floating-label-form-group-with-focus");
+  }).on("blur", ".floating-label-form-group", function() {
+    $(this).removeClass("floating-label-form-group-with-focus");
+  });
 };
 
 Template.TripsCreate.destroyed = function () {
-  Meteor.clearInterval(getGeolocation);
+
 };

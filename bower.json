@@ -15,8 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "simpleWeather": "3.0.2",
-    "moment": ">= 2.6.0",
-    "jquery": ">= 1.2.0"
+    "moment": ">= 2.6.0"  
   }
 }

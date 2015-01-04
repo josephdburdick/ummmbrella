@@ -1,6 +1,5 @@
 TripsIndexController = RouteController.extend({
   waitOn: function () {
-  
 
   },
 

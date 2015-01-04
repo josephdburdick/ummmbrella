@@ -2,42 +2,22 @@
 /* Global CSS Styles */
 /*****************************************************************************/
 
-
 /*
-
-Variables
-
+Imports
+——————————————
 */
-$primaryColor1: #5507B2;
-$primaryColor2: #8D2CFF;
-$primaryColor3: #7F13FF;
-$secondaryColor1: #B2B000;
-$secondaryColor2: #FFFC13;
-
-/*
-
-Helpers 
-
-*/
-.pull-right{ float: right; }
-.pull-left { float: left; }
+@import 'lib/style/variables';
+@import '.meteor/local/build/programs/server/assets/packages/reywood_bootstrap3-sass/bootstrap';
+@import 'lib/style/loader';
+@import 'lib/style/grid';
+@import 'lib/style/float-label';
+@import 'lib/style/overrides';
 
 body{
   font: normal 18px/1.4 Helvetica Neue, Helvetica, Arial, serif;
-  background: #ddd;
+  background: #efefef;
 }
-
-core-toolbar{
-	background-color: $primaryColor1;;
-	color: white;
-}
-
-.container{
-	position: relative;
-	max-width: 1000px;
-	margin: 0 auto;
-}
-
-.btn{
-	background: #ccc;
+.intro {
+  padding: 40px 15px;
+  text-align: center;
 }

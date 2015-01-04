@@ -11,7 +11,8 @@ iron:router
 http
 jquery
 mquandalle:bower
-stevezhu:sass
+fourseven:scss
+reywood:bootstrap3-sass
 mrt:normalize.css
 mrt:modernizr-meteor
-
+natestrauser:font-awesome
