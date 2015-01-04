@@ -23,15 +23,13 @@
       <div class="col-sm-6">
         <div class="input-group input-group-lg floating-label-form-group">
           <label for="origin-departureDate">Leaving At</label>
-          <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving?" data-datetime="{{leavingDateTime}}" value="{{leavingDateTime}}">
-          <a href id="trip-getDeparture" class="input-group-addon">
+          <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving?" data-currentTime="{{currentDatetime}}" value="">
+          <a href id="trip-getDepartureDatetime" class="input-group-addon">
             <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
           </a>
         </div>
       </div>
     </div>
-    Leaving Date: {{selectedDate}}
-
     
     <br>
     <br>

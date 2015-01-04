@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "moment": ">= 2.6.0",
-    "smalot-bootstrap-datetimepicker": "~2.3.0"
+    "smalot-bootstrap-datetimepicker": "~2.3.0",
+    "bootbox": "~4.3.0"
   }
 }

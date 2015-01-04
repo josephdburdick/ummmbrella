@@ -1,15 +1,21 @@
 /*****************************************************************************/
 /* Bootstrap Overrides */
 /*****************************************************************************/
+
+// Behavior
+a:focus{ outline: 0; outline-offset: 0; }
+
+// Inputs
 .input-group-addon{
 	border: 0px;
 	background-color: transparent;
 }
-
-
 .input-lg, .input-group-lg > .form-control, .input-group-lg > .input-group-addon, .input-group-lg > .input-group-btn > .btn, .form-group-lg .form-control{
 	padding: 10px 16px 10px 0;
 }
 .input-group-addon.input-lg, .input-group-lg > .input-group-addon, .input-group-lg > .input-group-btn > .input-group-addon.btn{
 	vertical-align: bottom;	
+}
+.input-group-lg .fa{
+	font-size: 120%;
 }

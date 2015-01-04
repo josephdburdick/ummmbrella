@@ -53,7 +53,20 @@
 .floating-label-form-group-with-focus{
   box-shadow: inset 0 -2px $brand-primary;
 }
-
 form .row:first-child .floating-label-form-group {
   // border-top: 1px solid #ccc;
 }
+
+// Icons
+.floating-label-form-group .fa{
+  color: inherit;
+  transform: rotate(0deg);
+  transform-origin: center center;
+  transition: all .5s ease-in;
+}
+.floating-label-form-group-with-value .fa{
+  color: $brand-success;
+  transform: rotate(360deg);
+  transition: all .35s ease-in;
+}
+
