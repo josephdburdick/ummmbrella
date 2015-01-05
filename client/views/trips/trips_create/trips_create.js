@@ -26,6 +26,12 @@ var clearTimer = function(id){
 
 // Toggle Floating Label
 var toggleLabel = function (e, toggle){
+  // if e is not an event create an "event" out of an element
+  if (!e.currentTarget){
+    var el = e, 
+        e = {};
+        e.currentTarget = el;
+  }
   if (toggle === true){
     $(e.currentTarget)
     .closest('.input-group')
@@ -90,26 +96,30 @@ Template.TripsCreate.events({
         };
         Session.set('geocodeLocation', location);
         $('.loader').remove();
-        e.currentTarget.value ? toggleLabel(e, true) : toggleLabel(e, false);
+        toggleLabel($('#origin-location'), true);
       });
-      
     };
     function error(err){
       bootbox.confirm("Location not detected. Try again?", function(result) {
         if (result){
           geolocate();
         } else {
-          bootbox.alert('Sorry, but you location could not be detected.');
+          bootbox.alert('Sorry, but you location could not be detected. Please enter your city and state in the depature field.');
           return;
         }
       }); 
       $('.loader').remove();
+
     };
     var geolocate = function(){
       navigator.geolocation.getCurrentPosition(success);  
     };
     geolocate();
-    
+    //e.currentTarget.value ? toggleLabel(e, true) : toggleLabel(e, false);
+    // Session.get('geocodeLocation') !== undefined ? toggleLabel(e, true) : toggleLabel(e, false);
+    // debugger;
+
+    // toggleLabel($('#trip-getLocation'), true);
   },
 
   'keyup input': function (e, template) {
@@ -183,8 +193,6 @@ Template.TripsCreate.helpers({
   oneway: function() {
     if (Session.get('oneway'))
       return Session.get('oneway');
-    else
-      return $('#oneway-toggle').is(':checked');
   },
   currentLocation: function(){
     if (Session.get('geocodeLocation')){
@@ -275,13 +283,19 @@ Template.TripsCreate.rendered = function () {
   });
 
   // Initiate floating labels
-  $("body").on("input propertychange", ".floating-label-form-group", function(e) {
-    $(this).toggleClass("floating-label-form-group-with-value", !! $(e.target).val());
-  }).on("focus", ".floating-label-form-group", function() {
-    $(this).addClass("floating-label-form-group-with-focus");
-  }).on("blur", ".floating-label-form-group", function() {
-    $(this).removeClass("floating-label-form-group-with-focus");
+  $('body').on('input propertychange', '.floating-label-form-group', function(e) {
+    $(this).toggleClass('floating-label-form-group-with-value', !! $(e.target).val());
+  }).on('focus', '.floating-label-form-group', function() {
+    $(this).addClass('floating-label-form-group-with-focus');
+  }).on('blur', '.floating-label-form-group', function() {
+    $(this).removeClass('floating-label-form-group-with-focus');
   });
+
+  // Set one way Session variable
+  if ($('#oneway-toggle').is(':checked'))
+    Session.set('oneway', true);
+  else 
+    Session.set('oneway', false);
 };
 
 Template.TripsCreate.destroyed = function () {
