@@ -163,8 +163,6 @@ Template.TripsCreate.helpers({
   destination: function (){
     if (Session.get('destination'))
       return Session.get('destination');
-    else
-      return $('#destination-location').val(); 
   },
   
   selectedDate: function(options){

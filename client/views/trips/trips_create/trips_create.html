@@ -30,6 +30,33 @@
         </div>
       </div>
     </div>
+    {{#unless oneway}}
+    <div class="trips-container">
+      {{#each trips}}
+      <div class="row">
+        <div class="col-sm-1">
+          ladjkslajksdlaksjdlaks
+        </div>
+        <div class="col-sm-5 form-group">
+          <div class="input-group-lg floating-label-form-group">
+            <label for="destination-location">Going to</label>
+            <input type="text" class="form-control" placeholder="Where are you going ?" required="required" tabindex="3" value="{{name}}">
+          </div>
+        </div>
+        <div class="col-sm-5 form-group">
+          <div class="input-group input-group-lg floating-label-form-group">
+            <label for="origin-departureDate">Leaving At</label>
+            <input type="text" class="form-control form-datepicker" placeholder="When are you leaving {{name}}?" value="{{time}}" required="required" tabindex="4">
+            <a href class="trip-getDatetime input-group-addon">
+              <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+      </div>
+    {{/unless}}
+    {{#unless oneway}}
     <div class="row">
       <div class="col-sm-6 form-group">
         <div class="input-group-lg floating-label-form-group">
@@ -47,26 +74,7 @@
         </div>
       </div>
     </div>
-    {{#each trips}}
-    <div class="row">
-      <div class="col-sm-6 form-group">
-        <div class="input-group-lg floating-label-form-group">
-          <label for="destination-location">Going to</label>
-          <input type="text" class="form-control" placeholder="Where are you going ?" required="required" tabindex="3" value="{{name}}">
-        </div>
-      </div>
-      <div class="col-sm-6 form-group">
-        <div class="input-group input-group-lg floating-label-form-group">
-          <label for="origin-departureDate">Leaving At</label>
-          <input type="text" class="form-control form-datepicker" placeholder="When are you leaving {{name}}?" value="{{time}}" required="required" tabindex="4">
-          <a href class="trip-getDatetime input-group-addon">
-            <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-    {{/each}}
-    {{#unless oneway}}
+
     <div class="row">
       <div class="col-xs-6 form-group">
         <a href class="btn btn-lg btn-success btn-block">Add Trip</a>
