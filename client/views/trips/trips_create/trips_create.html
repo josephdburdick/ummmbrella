@@ -4,26 +4,26 @@
 
     <div class="intro">
       <h1>Ummmbrella</h1>
-      <p class="lead">Look up the weather for your next trip!</p>
+      <p class="lead">Look up whether there's weather on your next trip!</p>
     </div>
 
   </div><!-- /.container -->
 
   <form role="form" class="container-fluid">
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-6 form-group">
         <div class="input-group input-group-lg floating-label-form-group">
           <label for="origin-location">Depart From</label>
-          <input type="text" class="form-control" id="origin-location" placeholder="Where are you departing from?" value="{{currentLocation}}" required="required" tabindex="1">
+          <input type="text" class="form-control" id="origin-location" placeholder="Where are you departing from ?" value="{{currentLocation}}" required="required" tabindex="1">
           <a href id="trip-getLocation" class="input-group-addon">
             <i class="fa fa-location-arrow" data-toggle="tooltip" data-placement="left" title="Detect your location"></i>
           </a>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 form-group">
         <div class="input-group input-group-lg floating-label-form-group">
           <label for="origin-departureDate">Leaving At</label>
-          <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving?" data-currentTime="{{currentDatetime}}" value="" required="required" tabindex="2">
+          <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving {{currentLocation}}?" data-currentTime="{{currentDatetime}}" value="" required="required" tabindex="2">
           <a href id="trip-getDepartureDatetime" class="input-group-addon">
             <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
           </a>
@@ -31,39 +31,51 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-6 form-group">
         <div class="input-group-lg floating-label-form-group">
           <label for="destination-location">Going to</label>
-          <input type="text" class="form-control" id="destination-location" placeholder="Where are you going to?" required="required" tabindex="3">
+          <input type="text" class="form-control" id="destination-location" placeholder="Where are you going to ?" required="required" tabindex="3">
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6 form-group">
+        <div class="input-group input-group-lg floating-label-form-group">
+          <label for="origin-departureDate">Leaving At</label>
+          <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving ?" data-currentTime="{{currentDatetime}}" value="" required="required" tabindex="2">
+          <a href id="trip-getDepartureDatetime" class="input-group-addon">
+            <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 form-group">
         <div class="form-group col-sm-12">
           <div class="flexbox row align-center justify-between">
             <div class="question flex">
               One-way trip?
             </div>
             <div class="switch">
-              <input id="oneway-toggle" class="cmn-toggle cmn-toggle-yes-no" type="checkbox" checked>
+              <input id="oneway-toggle" class="cmn-toggle cmn-toggle-yes-no" type="checkbox">
               <label for="oneway-toggle" data-on="Yes" data-off="No"></label>
             </div>
           </div>
         </div>
       </div>
     </div>
-    {{#if oneway "false"}}
+    {{#unless oneway}}
     <div class="row">
-      <div class="col-xs-6">
+      <div class="col-xs-6 form-group">
         <a href class="btn btn-lg btn-success btn-block">Add Trip</a>
       </div>
-      <div class="col-xs-6">
+      <div class="col-xs-6 form-group">
         <a href class="btn btn-lg btn-default btn-block">Add Location</a>
       </div>
     </div>
-    {{/if}}
+    {{/unless}}
     <div class="row">
-      <div class="col-xs-12">
-        <a href class="btn btn-lg btn-default btn-block">Add Location</a>
+      <div class="col-xs-12 form-group">
+        <a href class="btn btn-lg btn-default btn-block">Get Forecast</a>
       </div>
     </div>
     

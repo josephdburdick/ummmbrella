@@ -19,3 +19,6 @@ a:focus{ outline: 0; outline-offset: 0; }
 .input-group-lg .fa{
 	font-size: 120%;
 }
+.btn-lg, .btn-group-lg > .btn{
+	padding: 20px 16px;
+}
