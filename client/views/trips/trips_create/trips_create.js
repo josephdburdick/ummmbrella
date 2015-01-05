@@ -119,6 +119,10 @@ Template.TripsCreate.events({
     e.currentTarget.value !=="" ? toggleLabel(e, true) : toggleLabel(e, false);
   },
 
+  'change #oneway-toggle': function(e, template){
+    Session.set('oneway', e.currentTarget.checked);
+  },
+
   'submit form': function(e, template){
     e.preventDefault();
     console.log('origin: ', Session.get('origin-location'));
@@ -164,8 +168,6 @@ Template.TripsCreate.helpers({
   leavingDatetime: function(options){
     if (Session.get('leavingDatetime'))
       return Session.get('leavingDatetime');
-    else
-      return Session.get('tomorrowsDatetimeLocal');
   },
 
   currentDatetime: function(){
@@ -178,6 +180,12 @@ Template.TripsCreate.helpers({
 
   coords: function() { return Session.get('coords'); },
 
+  oneway: function() {
+    if (Session.get('oneway'))
+      return Session.get('oneway');
+    else
+      return $('#oneway-toggle').is(':checked');
+  },
   currentLocation: function(){
     if (Session.get('geocodeLocation')){
       var l = Session.get('geocodeLocation');  

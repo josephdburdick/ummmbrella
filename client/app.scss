@@ -15,10 +15,16 @@ Imports
 @import 'lib/style/switches';
 
 body{
-  font: normal 18px/1.4 Helvetica Neue, Helvetica, Arial, serif;
-  background: #efefef;
+	width: 100%;
+	font: normal 18px/1.4 Helvetica Neue, Helvetica, Arial, serif;
+	background: #efefef;
 }
 .intro {
-  padding: 40px 15px;
-  text-align: center;
+	padding: 40px 15px;
+	text-align: center;
+}
+.container-fluid, .container{
+	position: relative;
+	max-width: 1000px;
+	margin: 0 auto;
 }

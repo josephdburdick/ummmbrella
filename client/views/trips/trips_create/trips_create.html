@@ -4,7 +4,7 @@
 
     <div class="intro">
       <h1>Ummmbrella</h1>
-      <p class="lead">Use this app to look up the weather in multiple locations so you can prepare for your next trip more effectively.</p>
+      <p class="lead">Look up the weather for your next trip!</p>
     </div>
 
   </div><!-- /.container -->
@@ -32,36 +32,41 @@
     </div>
     <div class="row">
       <div class="col-sm-6">
-        <div class="input-group input-group-lg floating-label-form-group">
+        <div class="input-group-lg floating-label-form-group">
           <label for="destination-location">Going to</label>
           <input type="text" class="form-control" id="destination-location" placeholder="Where are you going to?" required="required" tabindex="3">
-          <a href id="trip-getLocation" class="input-group-addon">
-            <i class="fa fa-location-arrow" data-toggle="tooltip" data-placement="left" title="Detect your location"></i>
-          </a>
         </div>
       </div>
       <div class="col-sm-6">
         <div class="form-group col-sm-12">
           <div class="flexbox row align-center justify-between">
             <div class="question flex">
-              Is this a one-way trip?
+              One-way trip?
             </div>
             <div class="switch">
-              <input id="cmn-toggle-8" class="cmn-toggle cmn-toggle-yes-no" type="checkbox" checked>
-              <label for="cmn-toggle-8" data-on="Yes" data-off="No"></label>
+              <input id="oneway-toggle" class="cmn-toggle cmn-toggle-yes-no" type="checkbox" checked>
+              <label for="oneway-toggle" data-on="Yes" data-off="No"></label>
             </div>
           </div>
         </div>
-        <!-- <div class="input-group input-group-lg col-sm-6">
-          <a href class="btn-large brand-success">Add Location</a>
-        </div>
-        <div class="input-group input-group-lg col-sm-6">
-          <a href class="btn-large brand-success">Add Location</a>
-        </div> -->
       </div>
     </div>
-
-    <input type="submit" class="hidden">
+    {{#if oneway "false"}}
+    <div class="row">
+      <div class="col-xs-6">
+        <a href class="btn btn-lg btn-success btn-block">Add Trip</a>
+      </div>
+      <div class="col-xs-6">
+        <a href class="btn btn-lg btn-default btn-block">Add Location</a>
+      </div>
+    </div>
+    {{/if}}
+    <div class="row">
+      <div class="col-xs-12">
+        <a href class="btn btn-lg btn-default btn-block">Add Location</a>
+      </div>
+    </div>
+    
   </form>
 
 </template>
