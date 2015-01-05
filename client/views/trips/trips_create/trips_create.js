@@ -157,7 +157,9 @@ Template.TripsCreate.events({
 });
 
 Template.TripsCreate.helpers({
-
+  trips: function(){
+    return Trips.find({});
+  },
   destination: function (){
     if (Session.get('destination'))
       return Session.get('destination');
