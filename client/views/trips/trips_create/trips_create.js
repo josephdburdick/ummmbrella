@@ -34,24 +34,25 @@ var toggleLabel = function (e, toggle){
   }
   if (toggle === true){
     $(e.currentTarget)
-    .closest('.input-group')
+    .closest('.form-group')
       .find('input.form-control')
-    .closest('.input-group')
-      .addClass('floating-label-form-group-with-value');
+    .closest('.form-group')
+      .addClass('floating-label-form-group-with-value')
+    .next('.form-group');
   } else if (toggle === false){
     $(e.currentTarget)
-    .closest('.input-group')
+    .closest('.form-group')
       .find('input.form-control')
       .focus()
-    .closest('.input-group')
+    .closest('.form-group')
       .removeClass('floating-label-form-group-with-value');
   }
 }
 var timersArray = [];
 Template.TripsCreate.events({
-  'click #trip-getDepartureDatetime': function(e, template){
+  'click .trip-getDatetime': function(e, template){
     e.preventDefault();
-    var datetimeInput = $(e.currentTarget).closest('.input-group').find('.form-datepicker')
+    var datetimeInput = $(e.currentTarget).closest('.form-group').find('.form-datepicker')
     bootbox.dialog({
       message: "Are you leaving now or later?",
       title: "Choose Departure Time",
@@ -62,6 +63,7 @@ Template.TripsCreate.events({
           callback: function() {
             timeUpdate({ el: $(datetimeInput[0]), getset: true });
             datetimeInput.datetimepicker('hide');
+            toggleLabel(datetimeInput, true);
           }
         },   
         main: {
@@ -115,17 +117,12 @@ Template.TripsCreate.events({
       navigator.geolocation.getCurrentPosition(success);  
     };
     geolocate();
-    //e.currentTarget.value ? toggleLabel(e, true) : toggleLabel(e, false);
-    // Session.get('geocodeLocation') !== undefined ? toggleLabel(e, true) : toggleLabel(e, false);
-    // debugger;
-
-    // toggleLabel($('#trip-getLocation'), true);
   },
 
   'keyup input': function (e, template) {
     Session.set('origin-location', $('#origin-location').val());
     Session.set('destination-location', $('#destination-location').val());
-    
+
     e.currentTarget.value !=="" ? toggleLabel(e, true) : toggleLabel(e, false);
   },
 
@@ -165,7 +162,7 @@ Template.TripsCreate.helpers({
     if (Session.get('destination'))
       return Session.get('destination');
     else
-      return "Destination";
+      return $('#destination-location').val(); 
   },
   
   selectedDate: function(options){
@@ -197,7 +194,7 @@ Template.TripsCreate.helpers({
   currentLocation: function(){
     if (Session.get('geocodeLocation')){
       var l = Session.get('geocodeLocation');  
-      return l.hood + ", " + l.city + ", " + l.state; 
+      return l.city + ", " + l.state; 
     } else {
       return "";
     }
@@ -246,8 +243,9 @@ Template.TripsCreate.rendered = function () {
 
       $(e.currentTarget)
         .data('datetime', selected.datetime)
-        .val(moment(selected.datetimeLocal).format('MMMM Do YYYY, h:mm a'))
-        .closest('.input-group').addClass('floating-label-form-group-with-value');
+        .val(moment(selected.datetimeLocal).format('MMMM Do YYYY, h:mm a'));
+      toggleLabel(e, true);
+  
     }
   };
   $('.form-datepicker').each(function(i , el){
