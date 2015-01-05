@@ -160,6 +160,11 @@ Template.TripsCreate.helpers({
   trips: function(){
     return Trips.find({});
   },
+  lastTrip: function(){
+    var id = this._id;
+    debugger;
+    return _.last(Trips.find({})) == this.id;;
+  },
   destination: function (){
     if (Session.get('destination'))
       return Session.get('destination');

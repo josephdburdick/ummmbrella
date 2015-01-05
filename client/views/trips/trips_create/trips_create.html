@@ -13,7 +13,7 @@
     <div class="row">
       <div class="col-sm-6 form-group">
         <div class="input-group input-group-lg floating-label-form-group">
-          <label for="origin-location">Depart From</label>
+          <label for="origin-location">Depart</label>
           <input type="text" class="form-control" id="origin-location" placeholder="Where are you departing from ?" value="{{currentLocation}}" required="required" tabindex="1">
           <a href id="trip-getLocation" class="input-group-addon">
             <i class="fa fa-location-arrow" data-toggle="tooltip" data-placement="left" title="Detect your location"></i>
@@ -22,7 +22,7 @@
       </div>
       <div class="col-sm-6 form-group">
         <div class="input-group input-group-lg floating-label-form-group">
-          <label for="origin-departureDate">Leaving At</label>
+          <label for="origin-departureDate">Leaving</label>
           <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving {{currentLocation}}?" data-currentTime="{{currentDatetime}}" value="" required="required" tabindex="2">
           <a href class="trip-getDatetime input-group-addon">
             <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
@@ -33,21 +33,24 @@
     {{#unless oneway}}
     <div class="trips-container">
       {{#each trips}}
-      <div class="row">
+      <div class="row" data-tripId="{{id}}">
         <div class="col-sm-1">
-          <a href="#" class="btn btn-lg"><i class="fa fa-plus"></i></a>
-          <a href="#" class="btn btn-lg"><i class="fa fa-minus"></i></a>
+          <a href="#" class="btn" date-role="delete-trip"><i class="fa fa-minus"></i></a>
+          {{#if lastTrip}}
+           <a href="#" class="btn" data-role="add-trip"><i class="fa fa-plus"></i>
+           </a>
+          {{/if}}
         </div>
         <div class="col-sm-5 form-group">
           <div class="input-group-lg floating-label-form-group">
-            <label for="destination-location">Going to</label>
+            <label for="destination-location">To</label>
             <input type="text" class="form-control" placeholder="Where are you going ?" required="required" tabindex="3" value="{{name}}">
           </div>
         </div>
         <div class="col-sm-6 form-group">
           <div class="input-group input-group-lg floating-label-form-group">
-            <label for="origin-departureDate">Leaving At</label>
-            <input type="text" class="form-control form-datepicker" placeholder="When are you leaving {{name}}?" value="{{time}}" required="required" tabindex="4">
+            <label for="input-departureDate-{{id}}">Leaving</label>
+            <input type="text" class="form-control form-datepicker" placeholder="When are you leaving {{name}}?" value="{{time}}" required="required" tabindex="4" id="input-departureDate-{{id}}">
             <a href class="trip-getDatetime input-group-addon">
               <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
             </a>
