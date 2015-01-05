@@ -4,9 +4,9 @@
 
 var timeUpdate = function(options){
   var id = $(options.el).attr('data-timerid');
-  console.log (options);
   if (id && options.getset === false){
     clearTimer(id);
+    $(options.el).removeAttr('data-timerid');
   } else if (options.el && options.getset === true){
     if (!$(options.el).attr('data-timerid')){
       var timerId = setInterval(function(){        
@@ -15,20 +15,6 @@ var timeUpdate = function(options){
       $(options.el).attr('data-timerid', timerId)  
     }    
   }
-  // if (options.getset === true){  
-  //   // timerId = Meteor.setInterval(function(){
-  //   //   Session.set("tomorrowsDatetime", moment().add(1, 'days').calendar());
-  //   //   Session.set("tomorrowsDatetimeLocal", moment().add(1, 'days').format('MMMM Do YYYY, h:mm:ss a'));
-  //   // }, 1000 );
-  //   if (options.el)
-  //     $(options.el).attr('data-timerId', timerId);
-  //   console.log('timerId starting:', timerId);
-  // } else {
-  //   if (isNaN(timerId))
-  //     timerId = $(options.el).attr('data-timerId');
-  //   console.log('timerId stopping:', timerId);
-  //   clearTimer(timerId);
-  // } 
   return id; 
 };
 
@@ -64,64 +50,37 @@ Template.TripsCreate.events({
    *
    *  }
    */
-    'click #origin-departureDate':function(e, template){
-      // debugger;
-    },
+    // 'click #origin-departureDate': function(e, template){
+        //e.preventDefault();
+    //   timeUpdate({ el: $(e.currentTarget), getset: false });
+    // },
     'click #trip-getDepartureDatetime': function(e, template){
       e.preventDefault();
       var datetimeInput = $(e.currentTarget).closest('.input-group').find('.form-datepicker')
       bootbox.dialog({
         message: "Are you leaving now or later?",
-        title: "Choose Option",
+        title: "Choose Departure Time",
         buttons: {
           success: {
             label: "Leaving Now",
             className: "btn-success",
             callback: function() {
-              // var timerId = timeUpdate({
-              //   el: datetimeInput,
-              //   getset: true
-              // });
-              // var timerId = 
-              
-              // var thisId = setInterval(function(){
-              //   datetimeInput.val(Session.get('currentDatetime'));
-              //   // datetimeInput.val(moment().calendar());
-              // }, 1000);
-
-              timeUpdate({
-                el: $(datetimeInput[0]),
-                getset: true
-              });
-
-              // timeUpdate({
-              //   el: $(e.currentTarget),
-              //   getset: true
-              // });
-              // timeUpdate({
-              //   el: datetimeInput,
-              //   getset: true
-              // });
-
-              // timersArray.push([{
-              //   id: thisId,
-              //   el: datetimeInput
-              // }]);
+              timeUpdate({ el: $(datetimeInput[0]), getset: true });
               datetimeInput.datetimepicker('hide');
             }
-          },
-          
+          },   
           main: {
             label: "Leaving Later",
             className: "btn-primary",
             callback: function() {
+              timeUpdate({ el: $(datetimeInput[0]), getset: false });
               datetimeInput.datetimepicker('show');
             }
           }
         }
       });      
     },
-
+    
     'click #trip-getLocation': function(e, template){
       $('body').append('<div class="loader"></div>');
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -129,35 +88,26 @@ Template.TripsCreate.events({
           lat: position.coords.latitude,
           lon: position.coords.longitude
         });
-        var coords = Session.get('coords');
+        var coords = Session.get('coords'), location;
+
         Meteor.call('geocodeLocation', coords, function(e, response){
-          var location = {
+          location = {
             hood: response.data.results[1].address_components[1].short_name,
             city: response.data.results[2].address_components[1].short_name,
             state: response.data.results[2].address_components[3].short_name,
             country: response.data.results[2].address_components[4].short_name
           };
-
           Session.set('geocodeLocation', location);
           $('.loader').remove();
         });
-        $(e.currentTarget).closest('.input-group').addClass('floating-label-form-group-with-value');
-        if (!Session.get('selectedDate')){
-          $(e.currentTarget).closest('.input-group').next('.input-group').find('input')
-            .focus()
-              .val(Session.get('tomorrowsDatetime'));
-            toggleLabel(e, true);
-        }  
+        $(e.currentTarget).val() ? toggleLabel(e, true) : toggleLabel(e, false);
       });
     },
 
     'keyup input': function (e, template) {
       Session.set('origin-location', $('#origin-location').val());
       Session.set('destination-location', $('#destination-location').val());
-
-      if ($(e.currentTarget).closest('.input-group').hasClass('floating-label-form-group')){       
-        $(e.currentTarget).val() ? toggleLabel(e, true) : toggleLabel(e, false);
-      }
+      $(e.currentTarget).val() ? toggleLabel(e, true) : toggleLabel(e, false);
     },
 
     'submit form': function(e, template){
@@ -173,6 +123,7 @@ Template.TripsCreate.events({
           woeid: '',
           unit: 'f',
           success: function(weather) {
+            debugger;
             html = '<p>'+weather.temp+'&deg; in '+ Session.get('destination')+ '</p>';
 
             $("#weather").html(html);
@@ -186,12 +137,7 @@ Template.TripsCreate.events({
 });
 
 Template.TripsCreate.helpers({
-  /*
-   * Example:
-   *  items: function () {
-   *    return Items.find();
-   *  }
-   */
+
   destination: function (){
     if (Session.get('destination'))
       return Session.get('destination');
@@ -205,19 +151,24 @@ Template.TripsCreate.helpers({
     else
       return Session.get('tomorrowsDatetimeLocal');
   },
+
   leavingDatetime: function(options){
     if (Session.get('leavingDatetime'))
       return Session.get('leavingDatetime');
     else
       return Session.get('tomorrowsDatetimeLocal');
   },
+
   currentDatetime: function(){
     return Session.get('currentDatetime');
   },
+
   currentDatetimeLocal: function(){
     return Session.get('currentDatetimeLocal');
   },
+
   coords: function() { return Session.get('coords'); },
+
   currentLocation: function(){
     if (Session.get('geocodeLocation')){
       var l = Session.get('geocodeLocation');  
@@ -261,10 +212,7 @@ Template.TripsCreate.rendered = function () {
       e.date = $(el).attr('data-datetime');
     if (e.date.valueOf() > new Date().valueOf()){         
       //find value of calendar in ever event        
-      timeUpdate({
-        el: $(e.currentTarget),
-        getset: false
-      });
+      timeUpdate({ el: $(e.currentTarget), getset: false });
 
       var selected = {
         datetime: $(e.currentTarget).data('datetime'),
@@ -279,35 +227,34 @@ Template.TripsCreate.rendered = function () {
   };
   $('.form-datepicker').each(function(i , el){
     var thisTime = new Date().valueOf()
-    $(el).datetimepicker({
-      startDate: new Date(),
-      showMeridian: true
-    }).on('changeDate', function(e){
-      
-      var timerId = $(e.currentTarget).data('timerid');
-      if (!isNaN(timerId)){
-        clearTimer(timerId);
-        $(e.currentTarget).removeData('timerid');
-      }
-      toggleLabel(e, true);
-      $(el).datetimepicker('hide');
-    }).on('change', function(e){
-      console.log(e);
-      if (e.currentTarget.value)
-        toggleLabel(e, true);
-      else
-        toggleLabel(e, false);
-      $(el).datetimepicker('hide');
-    }).on('show', function(e){
-      if ($(e.currentTarget).data('timerid')){
+    $(el)
+      .datetimepicker({
+        startDate: new Date(),
+        setEndDate: moment(new Date()).add(14, 'days'),
+        showMeridian: true
+      })
+      .on('changeDate', function(e){
         var timerId = $(e.currentTarget).data('timerid');
-        clearTimer(timerId);  
-      }
-    });
-    timeUpdate({
-      el: el,
-      getset: false
-    });;
+        if (!isNaN(timerId)){
+          clearTimer(timerId);
+          $(e.currentTarget).removeData('timerid');
+        }
+        toggleLabel(e, true);
+        $(el)
+          .val(moment(e.date).format('MMMM Do YYYY, h:mm a'))
+          .datetimepicker('hide');
+      })
+      .on('change', function(e){
+        $(el).datetimepicker('hide');
+      })
+      .on('show', function(e){
+        if ($(e.currentTarget).data('timerid')){
+          var timerId = $(e.currentTarget).data('timerid');
+          clearTimer(timerId);  
+        }
+      });
+    
+    timeUpdate({ el: el, getset: false });
   });
 
   // Initiate floating labels

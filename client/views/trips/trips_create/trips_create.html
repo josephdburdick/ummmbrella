@@ -14,7 +14,7 @@
       <div class="col-sm-6">
         <div class="input-group input-group-lg floating-label-form-group">
           <label for="origin-location">Depart From</label>
-          <input type="text" class="form-control" id="origin-location" placeholder="Where are you departing from?" value="{{currentLocation}}">
+          <input type="text" class="form-control" id="origin-location" placeholder="Where are you departing from?" value="{{currentLocation}}" required="required">
           <a href id="trip-getLocation" class="input-group-addon">
             <i class="fa fa-location-arrow" data-toggle="tooltip" data-placement="left" title="Detect your location"></i>
           </a>
@@ -23,7 +23,7 @@
       <div class="col-sm-6">
         <div class="input-group input-group-lg floating-label-form-group">
           <label for="origin-departureDate">Leaving At</label>
-          <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving?" data-currentTime="{{currentDatetime}}" value="">
+          <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving?" data-currentTime="{{currentDatetime}}" value="" required="required">
           <a href id="trip-getDepartureDatetime" class="input-group-addon">
             <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
           </a>
