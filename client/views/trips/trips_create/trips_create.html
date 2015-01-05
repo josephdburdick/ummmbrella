@@ -35,7 +35,8 @@
       {{#each trips}}
       <div class="row">
         <div class="col-sm-1">
-          ladjkslajksdlaksjdlaks
+          <a href="#" class="btn btn-lg"><i class="fa fa-plus"></i></a>
+          <a href="#" class="btn btn-lg"><i class="fa fa-minus"></i></a>
         </div>
         <div class="col-sm-5 form-group">
           <div class="input-group-lg floating-label-form-group">
@@ -43,7 +44,7 @@
             <input type="text" class="form-control" placeholder="Where are you going ?" required="required" tabindex="3" value="{{name}}">
           </div>
         </div>
-        <div class="col-sm-5 form-group">
+        <div class="col-sm-6 form-group">
           <div class="input-group input-group-lg floating-label-form-group">
             <label for="origin-departureDate">Leaving At</label>
             <input type="text" class="form-control form-datepicker" placeholder="When are you leaving {{name}}?" value="{{time}}" required="required" tabindex="4">
