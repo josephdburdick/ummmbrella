@@ -30,110 +30,119 @@ var toggleLabel = function (e, toggle){
     $(e.currentTarget)
     .closest('.input-group')
       .find('input.form-control')
-      .focus()
     .closest('.input-group')
       .addClass('floating-label-form-group-with-value');
   } else if (toggle === false){
     $(e.currentTarget)
     .closest('.input-group')
       .find('input.form-control')
-      .blur()
+      .focus()
     .closest('.input-group')
       .removeClass('floating-label-form-group-with-value');
   }
 }
 var timersArray = [];
 Template.TripsCreate.events({
-  /*
-   * Example:
-   *  'click .selector': function (e, tmpl) {
-   *
-   *  }
-   */
-    // 'click #origin-departureDate': function(e, template){
-        //e.preventDefault();
-    //   timeUpdate({ el: $(e.currentTarget), getset: false });
-    // },
-    'click #trip-getDepartureDatetime': function(e, template){
-      e.preventDefault();
-      var datetimeInput = $(e.currentTarget).closest('.input-group').find('.form-datepicker')
-      bootbox.dialog({
-        message: "Are you leaving now or later?",
-        title: "Choose Departure Time",
-        buttons: {
-          success: {
-            label: "Leaving Now",
-            className: "btn-success",
-            callback: function() {
-              timeUpdate({ el: $(datetimeInput[0]), getset: true });
-              datetimeInput.datetimepicker('hide');
-            }
-          },   
-          main: {
-            label: "Leaving Later",
-            className: "btn-primary",
-            callback: function() {
-              timeUpdate({ el: $(datetimeInput[0]), getset: false });
-              datetimeInput.datetimepicker('show');
-            }
+  'click #trip-getDepartureDatetime': function(e, template){
+    e.preventDefault();
+    var datetimeInput = $(e.currentTarget).closest('.input-group').find('.form-datepicker')
+    bootbox.dialog({
+      message: "Are you leaving now or later?",
+      title: "Choose Departure Time",
+      buttons: {
+        success: {
+          label: "Leaving Now",
+          className: "btn-success",
+          callback: function() {
+            timeUpdate({ el: $(datetimeInput[0]), getset: true });
+            datetimeInput.datetimepicker('hide');
+          }
+        },   
+        main: {
+          label: "Leaving Later",
+          className: "btn-primary",
+          callback: function() {
+            timeUpdate({ el: $(datetimeInput[0]), getset: false });
+            datetimeInput.datetimepicker('show');
           }
         }
-      });      
-    },
+      }
+    });      
+  },
+
+  'click #trip-getLocation': function(e, template){
+    if (!$('.loader').length)
+      $('body').append('<div class="loader"></div>');  
     
-    'click #trip-getLocation': function(e, template){
-      $('body').append('<div class="loader"></div>');
-      navigator.geolocation.getCurrentPosition(function(position) {
+    function success(position){
         Session.set('coords', {
-          lat: position.coords.latitude,
-          lon: position.coords.longitude
-        });
-        var coords = Session.get('coords'), location;
-
-        Meteor.call('geocodeLocation', coords, function(e, response){
-          location = {
-            hood: response.data.results[1].address_components[1].short_name,
-            city: response.data.results[2].address_components[1].short_name,
-            state: response.data.results[2].address_components[3].short_name,
-            country: response.data.results[2].address_components[4].short_name
-          };
-          Session.set('geocodeLocation', location);
-          $('.loader').remove();
-        });
-        $(e.currentTarget).val() ? toggleLabel(e, true) : toggleLabel(e, false);
+        lat: position.coords.latitude,
+        lon: position.coords.longitude
       });
-    },
+      var coords = Session.get('coords'), location;
 
-    'keyup input': function (e, template) {
-      Session.set('origin-location', $('#origin-location').val());
-      Session.set('destination-location', $('#destination-location').val());
-      $(e.currentTarget).val() ? toggleLabel(e, true) : toggleLabel(e, false);
-    },
+      Meteor.call('geocodeLocation', coords, function(e, response){
+        location = {
+          hood: response.data.results[1].address_components[1].short_name,
+          city: response.data.results[2].address_components[1].short_name,
+          state: response.data.results[2].address_components[3].short_name,
+          country: response.data.results[2].address_components[4].short_name
+        };
+        Session.set('geocodeLocation', location);
+        $('.loader').remove();
+        e.currentTarget.value ? toggleLabel(e, true) : toggleLabel(e, false);
+      });
+      
+    };
+    function error(err){
+      bootbox.confirm("Location not detected. Try again?", function(result) {
+        if (result){
+          geolocate();
+        } else {
+          bootbox.alert('Sorry, but you location could not be detected.');
+          return;
+        }
+      }); 
+      $('.loader').remove();
+    };
+    var geolocate = function(){
+      navigator.geolocation.getCurrentPosition(success);  
+    };
+    geolocate();
+    
+  },
 
-    'submit form': function(e, template){
-      e.preventDefault();
-      console.log('origin: ', Session.get('origin-location'));
-      console.log('destination: ', Session.get('destination-location'));
-      if (!$('form #weather').length)
-        $('form').append('<div id="weather"></div>');
-      setTimeout(function(){
-        // Weather
-        $.simpleWeather({
-          location: Session.get('destination'),
-          woeid: '',
-          unit: 'f',
-          success: function(weather) {
-            debugger;
-            html = '<p>'+weather.temp+'&deg; in '+ Session.get('destination')+ '</p>';
+  'keyup input': function (e, template) {
+    Session.set('origin-location', $('#origin-location').val());
+    Session.set('destination-location', $('#destination-location').val());
+    
+    e.currentTarget.value !=="" ? toggleLabel(e, true) : toggleLabel(e, false);
+  },
 
-            $("#weather").html(html);
-          },
-          error: function(error) {
-            $("#weather").html('<p>'+error+'</p>');
-          }
-        });
-      }, 2000);
-    }
+  'submit form': function(e, template){
+    e.preventDefault();
+    console.log('origin: ', Session.get('origin-location'));
+    console.log('destination: ', Session.get('destination-location'));
+    if (!$('form #weather').length)
+      $('form').append('<div id="weather"></div>');
+    setTimeout(function(){
+      // Weather
+      $.simpleWeather({
+        location: Session.get('destination'),
+        woeid: '',
+        unit: 'f',
+        success: function(weather) {
+          debugger;
+          html = '<p>'+weather.temp+'&deg; in '+ Session.get('destination')+ '</p>';
+
+          $("#weather").html(html);
+        },
+        error: function(error) {
+          $("#weather").html('<p>'+error+'</p>');
+        }
+      });
+    }, 2000);
+  }
 });
 
 Template.TripsCreate.helpers({
