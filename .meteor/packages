@@ -18,3 +18,4 @@ mrt:modernizr-meteor
 natestrauser:font-awesome
 device-detection
 underscore
+mrt:bootstrap3-typeahead

@@ -122,7 +122,12 @@ Template.TripsCreate.events({
   'keyup input': function (e, template) {
     Session.set('origin-location', $('#origin-location').val());
     Session.set('destination-location', $('#destination-location').val());
-
+    if ($(e.currentTarget).hasClass('location-control')){
+      $.get("http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+ e.currentTarget.value, function(data){
+          $(e.currentTarget).typeahead({ source:data });
+          console.log(data);
+      },'json');
+    }
     e.currentTarget.value !=="" ? toggleLabel(e, true) : toggleLabel(e, false);
   },
 

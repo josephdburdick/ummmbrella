@@ -3,8 +3,8 @@
   <div class="container">
 
     <div class="intro">
-      <h1>Ummmbrella</h1>
-      <p class="lead">Look up whether there's weather on your next trip!</p>
+      <h1>UMMMBRELLA</h1>
+      <p class="lead">Whether there's weather on your next trip!</p>
     </div>
 
   </div><!-- /.container -->
@@ -14,8 +14,8 @@
       <div class="col-sm-6 form-group">
         <div class="input-group input-group-lg floating-label-form-group">
           <label for="origin-location">Depart</label>
-          <input type="text" class="form-control" id="origin-location" placeholder="Where are you departing from ?" value="{{currentLocation}}" required="required" tabindex="1">
-          <a href id="trip-getLocation" class="input-group-addon">
+          <input type="text"  class="location-control form-control" id="origin-location" placeholder="Where are you departing from ?" value="{{currentLocation}}" required="required" tabindex="1">
+          <a tabindex="-1" href id="trip-getLocation" class="input-group-addon">
             <i class="fa fa-location-arrow" data-toggle="tooltip" data-placement="left" title="Detect your location"></i>
           </a>
         </div>
@@ -23,8 +23,8 @@
       <div class="col-sm-6 form-group">
         <div class="input-group input-group-lg floating-label-form-group">
           <label for="origin-departureDate">Leaving</label>
-          <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving {{currentLocation}}?" data-currentTime="{{currentDatetime}}" value="" required="required" tabindex="2">
-          <a href class="trip-getDatetime input-group-addon">
+          <input type="text" class="form-datepicker form-control" id="origin-departureDate" placeholder="When are you leaving {{currentLocation}}?" data-currentTime="{{currentDatetime}}" value="" required="required" >
+          <a tabindex="-1" href class="trip-getDatetime input-group-addon">
             <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
           </a>
         </div>
@@ -35,23 +35,23 @@
       {{#each trips}}
       <div class="row" data-tripId="{{id}}">
         <div class="col-sm-1">
-          <a href="#" class="btn" date-role="delete-trip"><i class="fa fa-minus"></i></a>
+          <a tabindex="-1" href="#" class="btn" date-role="delete-trip"><i class="fa fa-minus"></i></a>
           {{#if lastTrip}}
-           <a href="#" class="btn" data-role="add-trip"><i class="fa fa-plus"></i>
+           <a tabindex="-1" href="#" class="btn" data-role="add-trip"><i class="fa fa-plus"></i>
            </a>
           {{/if}}
         </div>
         <div class="col-sm-5 form-group">
           <div class="input-group-lg floating-label-form-group">
             <label for="destination-location">To</label>
-            <input type="text" class="form-control" placeholder="Where are you going ?" required="required" tabindex="3" value="{{name}}">
+            <input type="text" class="form-control location-control" placeholder="Where are you going ?" required="required"  value="{{name}}">
           </div>
         </div>
         <div class="col-sm-6 form-group">
           <div class="input-group input-group-lg floating-label-form-group">
             <label for="input-departureDate-{{id}}">Leaving</label>
-            <input type="text" class="form-control form-datepicker" placeholder="When are you leaving {{name}}?" value="{{time}}" required="required" tabindex="4" id="input-departureDate-{{id}}">
-            <a href class="trip-getDatetime input-group-addon">
+            <input type="text"  class="form-datepicker" placeholder="When are you leaving {{name}}?" value="{{time}}" required="required"  id="input-departureDate-{{id}}">
+            <a tabindex="-1" href class="trip-getDatetime input-group-addon">
               <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
             </a>
           </div>
@@ -65,14 +65,14 @@
       <div class="col-sm-6 form-group">
         <div class="input-group-lg floating-label-form-group">
           <label for="destination-location">Going to</label>
-          <input type="text" class="form-control" id="destination-location" placeholder="Where are you going ?" required="required" tabindex="3" value="{{destination}}">
+          <input type="text" class="form-control location-control" id="destination-location" placeholder="Where are you going ?" required="required"  value="{{destination}}">
         </div>
       </div>
       <div class="col-sm-6 form-group">
         <div class="input-group input-group-lg floating-label-form-group">
           <label for="origin-departureDate">Leaving At</label>
-          <input type="text" class="form-control form-datepicker" id="origin-departureDate" placeholder="When are you leaving {{destination}}?" data-currentTime="{{currentDatetime}}" value="" required="required" tabindex="4">
-          <a href class="trip-getDatetime input-group-addon">
+          <input type="text"  class="form-datepicker" id="origin-departureDate" placeholder="When are you leaving {{destination}}?" data-currentTime="{{currentDatetime}}" value="" required="required" >
+          <a tabindex="-1" href class="trip-getDatetime input-group-addon">
             <i class="fa fa-clock-o" data-toggle="tooltip" data-placement="left" title="Choose your departure time"></i>
           </a>
         </div>
@@ -81,10 +81,10 @@
 
     <div class="row">
       <div class="col-xs-6 form-group">
-        <a href class="btn btn-lg btn-success btn-block">Add Trip</a>
+        <a tabindex="-1" href class="btn btn-lg btn-success btn-block">Add Trip</a>
       </div>
       <div class="col-xs-6 form-group">
-        <a href class="btn btn-lg btn-default btn-block">Add Location</a>
+        <a tabindex="-1" href class="btn btn-lg btn-default btn-block">Add Location</a>
       </div>
     </div>
     {{/unless}}
@@ -106,7 +106,7 @@
     
     <div class="row">
       <div class="col-xs-12 form-group">
-        <a href class="btn btn-lg btn-default btn-block">Get Forecast</a>
+        <a tabindex="-1" href class="btn btn-lg btn-default btn-block">Get Forecast</a>
         <input type="submit" class="hidden">
       </div>
     </div>
