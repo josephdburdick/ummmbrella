@@ -122,12 +122,16 @@ Template.TripsCreate.events({
   'keyup input': function (e, template) {
     Session.set('origin-location', $('#origin-location').val());
     Session.set('destination-location', $('#destination-location').val());
-    if ($(e.currentTarget).hasClass('location-control')){
-      $.get("http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+ e.currentTarget.value, function(data){
-          $(e.currentTarget).typeahead({ source:data });
-          console.log(data);
-      },'json');
-    }
+    // setTimeout(function(){
+      if ($(e.currentTarget).hasClass('location-control')){
+        $.get("http://gd.geobytes.com/AutoCompleteCity?callback=?&q="+ e.currentTarget.value, function(data){
+          
+            $(e.currentTarget).typeahead({ source: data });
+            console.log(data);
+        },'json');
+      }
+    // }, 500);
+    
     e.currentTarget.value !=="" ? toggleLabel(e, true) : toggleLabel(e, false);
   },
 
@@ -137,8 +141,8 @@ Template.TripsCreate.events({
 
   'submit form': function(e, template){
     e.preventDefault();
-    console.log('origin: ', Session.get('origin-location'));
-    console.log('destination: ', Session.get('destination-location'));
+    // console.log('origin: ', Session.get('origin-location'));
+    // console.log('destination: ', Session.get('destination-location'));
     if (!$('form #weather').length)
       $('form').append('<div id="weather"></div>');
     setTimeout(function(){

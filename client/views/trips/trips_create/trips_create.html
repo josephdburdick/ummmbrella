@@ -6,7 +6,7 @@
       <h1>UMMMBRELLA</h1>
       <p class="lead">Whether there's weather on your next trip!</p>
     </div>
-
+  <!-- {{> loginButtons}} -->
   </div><!-- /.container -->
 
   <form role="form" class="container-fluid">
@@ -14,7 +14,7 @@
       <div class="col-sm-6 form-group">
         <div class="input-group input-group-lg floating-label-form-group">
           <label for="origin-location">Depart</label>
-          <input type="text"  class="location-control form-control" id="origin-location" placeholder="Where are you departing from ?" value="{{currentLocation}}" required="required" tabindex="1">
+          <input data-provide="typeahead" type="text"  class="location-control form-control" id="origin-location" placeholder="Where are you departing from ?" value="{{currentLocation}}" required="required" tabindex="1">
           <a tabindex="-1" href id="trip-getLocation" class="input-group-addon">
             <i class="fa fa-location-arrow" data-toggle="tooltip" data-placement="left" title="Detect your location"></i>
           </a>
@@ -44,7 +44,7 @@
         <div class="col-sm-5 form-group">
           <div class="input-group-lg floating-label-form-group">
             <label for="destination-location">To</label>
-            <input type="text" class="form-control location-control" placeholder="Where are you going ?" required="required"  value="{{name}}">
+            <input data-provide="typeahead" type="text" class="form-control location-control" placeholder="Where are you going ?" required="required"  value="{{name}}">
           </div>
         </div>
         <div class="col-sm-6 form-group">
@@ -65,7 +65,7 @@
       <div class="col-sm-6 form-group">
         <div class="input-group-lg floating-label-form-group">
           <label for="destination-location">Going to</label>
-          <input type="text" class="form-control location-control" id="destination-location" placeholder="Where are you going ?" required="required"  value="{{destination}}">
+          <input data-provide="typeahead" type="text" class="form-control location-control" id="destination-location" placeholder="Where are you going ?" required="required"  value="{{destination}}">
         </div>
       </div>
       <div class="col-sm-6 form-group">
