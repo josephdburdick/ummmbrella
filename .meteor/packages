@@ -18,3 +18,5 @@ mrt:modernizr-meteor
 natestrauser:font-awesome
 device-detection
 underscore
+ian:accounts-ui-bootstrap-3
+accounts-password
