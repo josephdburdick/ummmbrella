@@ -152,7 +152,7 @@ Template.TripsCreate.events({
         woeid: '',
         unit: 'f',
         success: function(weather) {
-          debugger;
+          // debugger;
           html = '<p>'+weather.temp+'&deg; in '+ Session.get('destination')+ '</p>';
 
           $("#weather").html(html);
@@ -171,7 +171,6 @@ Template.TripsCreate.helpers({
   },
   lastTrip: function(){
     var id = this._id;
-    debugger;
     return _.last(Trips.find({})) == this.id;;
   },
   destination: function (){
