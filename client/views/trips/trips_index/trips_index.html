@@ -1,19 +1,13 @@
 <template name="TripsIndex">
-	<div vertical layout>
-		<div flex>
+	<div>
+		
+		{{#linkTo route="trips.create" class="btn btn-large intro"}}
+			
+				Start
 		  
-		</div>
-		<div>
-			
-				{{#linkTo route="trips.create" class="btn btn-large intro"}}
-					
-						Start
-				  
-				{{/linkTo}}
-			
-		</div>
-	</div>
-  
+		{{/linkTo}}
+		
+	</div>  
 </template>
 
 

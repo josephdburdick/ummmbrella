@@ -177,19 +177,16 @@ Template.TripsCreate.helpers({
     if (Session.get('destination'))
       return Session.get('destination');
   },
-  
   selectedDate: function(options){
     if (Session.get('leavingDate'))
       return Session.get('leavingDate');
     else
       return Session.get('tomorrowsDatetimeLocal');
   },
-
   leavingDatetime: function(options){
     if (Session.get('leavingDatetime'))
       return Session.get('leavingDatetime');
   },
-
   currentDatetime: function(){
     return Session.get('currentDatetime');
   },

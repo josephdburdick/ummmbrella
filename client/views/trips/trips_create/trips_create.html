@@ -33,7 +33,7 @@
     {{#unless oneway}}
     <div class="trips-container">
       {{#each trips}}
-      <div class="row" data-tripId="{{id}}">
+      <div class="row" data-tripId="{{_id}}">
         <div class="col-sm-1">
           <a tabindex="-1" href="#" class="btn" date-role="delete-trip"><i class="fa fa-minus"></i></a>
           {{#if lastTrip}}

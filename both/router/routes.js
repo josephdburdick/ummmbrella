@@ -7,23 +7,40 @@ Router.configure({
   notFoundTemplate: 'NotFound'
 });
 
-/*
- *  Example:
- *  Router.route('/', {name: 'home'});
-*/
-// var tripId;
-
 Router.route('/', {name: 'trips.index'});
+
+
 // Router.route('/trips/:_id', function(){
 // 	var trip = Trips.findOne({_id: this.params_id })
-// 	debugger;
-// 	this.render('trips.create', {data: item});
+// 	this.render('trips.create', {data: trip});
 // });
-Router.route('/new', function(){
-	var tripId = Trips.insert({createdAt: Date.now()}),
-		trip = Trips.findOne({_id: tripId })
-	this.render('TripsCreate', {data: trip});
+
+Router.route('/trips/:_id', function () {
+  this.render('TripsCreate', {
+    data: function () {
+      return Trips.findOne({_id: this.params._id});
+    }
+  });
 });
+
+Router.route('/new', function(){
+	var tripId = Trips.insert({createdAt: Date.now()});
+		// trip = Trips.findOne({_id: tripId })
+	// this.render('TripsCreate', {data: trip});
+	Router.go('/trips/'+ tripId);
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
