@@ -145,6 +145,10 @@ Template.TripsCreate.events({
     // console.log('destination: ', Session.get('destination-location'));
     if (!$('form #weather').length)
       $('form').append('<div id="weather"></div>');
+    var locations = [];
+      // template.find('.location-control').each(function(location){
+      //   debugger;
+      // });
     setTimeout(function(){
       // Weather
       $.simpleWeather({
@@ -166,8 +170,8 @@ Template.TripsCreate.events({
 });
 
 Template.TripsCreate.helpers({
-  trips: function(){
-    return Trips.find({});
+  locations: function(){
+    return Locations.find({tripsId: this.id});
   },
   lastTrip: function(){
     var id = this._id;

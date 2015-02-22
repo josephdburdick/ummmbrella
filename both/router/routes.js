@@ -18,7 +18,11 @@ Router.route('/', {name: 'trips.index'});
 Router.route('/trips/:_id', function () {
   this.render('TripsCreate', {
     data: function () {
-      return Trips.findOne({_id: this.params._id});
+      return [
+      	Trips.findOne({_id: this.params._id}),
+      	Locations.find({tripsId: this.params._id}),
+      	Forecasts.find({locationId: this.params._id})
+      ];
     }
   });
 });

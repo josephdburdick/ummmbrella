@@ -32,7 +32,7 @@
     </div>
     {{#unless oneway}}
     <div class="trips-container">
-      {{#each trips}}
+      {{#each locations}}
       <div class="row" data-tripId="{{_id}}">
         <div class="col-sm-1">
           <a tabindex="-1" href="#" class="btn" date-role="delete-trip"><i class="fa fa-minus"></i></a>
@@ -79,14 +79,14 @@
       </div>
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-xs-6 form-group">
         <a tabindex="-1" href class="btn btn-lg btn-success btn-block">Add Trip</a>
       </div>
       <div class="col-xs-6 form-group">
         <a tabindex="-1" href class="btn btn-lg btn-default btn-block">Add Location</a>
       </div>
-    </div>
+    </div> -->
     {{/unless}}
     <div class="row">
       <div class="col-sm-6 col-sm-push-6 form-group">
