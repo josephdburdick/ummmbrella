@@ -12,11 +12,8 @@ http
 jquery
 mquandalle:bower
 fourseven:scss
-reywood:bootstrap3-sass
-mrt:normalize.css
 mrt:modernizr-meteor
 natestrauser:font-awesome
 device-detection
-underscore
-ian:accounts-ui-bootstrap-3
 accounts-password
+d0minikk:materialize-meteor
